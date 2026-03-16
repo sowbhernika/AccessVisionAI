@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AccessVisionAI — Architecture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0f;
+    font-family: 'Segoe UI', -apple-system, sans-serif;
+    color: #e8e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  .diagram {
+    width: 1100px;
+    position: relative;
+  }
+  .title {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .title h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .title h1 span { color: #6c8aff; }
+  .title p {
+    color: #7a7a8e;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
+  .row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .box {
+    background: #12121a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    min-width: 260px;
+    position: relative;
+  }
+  .box.highlight {
+    border-color: rgba(108,138,255,0.3);
+    box-shadow: 0 0 24px rgba(108,138,255,0.08);
+  }
+  .box.green {
+    border-color: rgba(52,211,153,0.3);
+    box-shadow: 0 0 24px rgba(52,211,153,0.08);
+  }
+  .box.orange {
+    border-color: rgba(251,191,36,0.3);
+    box-shadow: 0 0 24px rgba(251,191,36,0.08);
+  }
+  .box-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6c8aff;
+    margin-bottom: 0.5rem;
+  }
+  .box.green .box-label { color: #34d399; }
+  .box.orange .box-label { color: #fbbf24; }
+  .box-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .box-items {
+    list-style: none;
+    font-size: 0.85rem;
+    color: #9898a6;
+    line-height: 1.7;
+  }
+  .box-items li::before {
+    content: "→ ";
+    color: #4a4a5e;
+  }
+  .arrow-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    color: #4a4a5e;
+    font-size: 0.8rem;
+  }
+  .arrow-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #6c8aff, #34d399);
+    border-radius: 1px;
+  }
+  .arrow-line.reverse {
+    background: linear-gradient(90deg, #34d399, #6c8aff);
+  }
+  .arrow-label {
+    background: #1a1a26;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #9898a6;
+    white-space: nowrap;
+  }
+  .flow-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+  .vert-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: #4a4a5e;
+    margin: 0.8rem 0;
+  }
+  .vert-line {
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(180deg, #6c8aff, #34d399);
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.3rem 0.7rem;
+    background: #1a1a26;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 100px;
+    color: #7a7a8e;
+  }
+  .svg-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.3rem;
+  }
+</style>
+</head>
+<body>
+<div class="diagram">
+  <div class="title">
+    <h1>Access<span>Vision</span>AI — Architecture</h1>
+    <p>Real-time multimodal accessibility assistant powered by Gemini Live API</p>
+  </div>
+
+  <!-- Main flow -->
+  <div class="flow-section">
+    <!-- User Device -->
+    <div class="box highlight" style="min-width:280px">
+      <div class="box-label">Client — Mobile / Desktop Browser</div>
+      <div class="box-title">
+        <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6c8aff" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+        User Device
+      </div>
+      <ul class="box-items">
+        <li>Camera capture (getUserMedia)</li>
+        <li>Mic → AudioWorklet (PCM 16kHz, 8ms)</li>
+        <li>JPEG frames (320×240 @ 0.5fps)</li>
+        <li>Audio playback via ring buffer (24kHz)</li>
+        <li>Accessible UI (WCAG AA)</li>
+      </ul>
+    </div>
+
+    <!-- Arrow -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem">
+      <div style="display:flex;align-items:center;gap:0.3rem">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Audio PCM + JPEG</div>
+        <div class="arrow-line"></div>
+      </div>
+      <div style="font-size:0.75rem;color:#6c8aff;font-weight:600">WebSocket (wss://)</div>
+      <div style="display:flex;align-items:center;gap:0.3rem">
+        <div class="arrow-line reverse"></div>
+        <div class="arrow-label">Audio Response</div>
+        <div class="arrow-line reverse"></div>
+      </div>
+    </div>
+
+    <!-- Gemini -->
+    <div class="box green" style="min-width:280px">
+      <div class="box-label">Google Cloud — Gemini Live API</div>
+      <div class="box-title">
+        <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+        Gemini 2.5 Flash
+      </div>
+      <ul class="box-items">
+        <li>Real-time audio understanding</li>
+        <li>Vision analysis (scene, text, objects)</li>
+        <li>Natural voice response (Kore)</li>
+        <li>Interruption handling</li>
+        <li>System prompt: accessibility coach</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Vertical arrow to backend -->
+  <div class="vert-arrow">
+    <div class="vert-line"></div>
+    <div class="arrow-label">GET /api/config</div>
+    <div class="vert-line"></div>
+  </div>
+
+  <!-- Backend -->
+  <div class="row">
+    <div class="box orange" style="min-width:320px">
+      <div class="box-label">Backend — FastAPI on Railway / Cloud Run</div>
+      <div class="box-title">
+        <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Python Server
+      </div>
+      <ul class="box-items">
+        <li>Serves static files (HTML/JS/CSS)</li>
+        <li>Provides API key + session config</li>
+        <li>Docker container (python:3.11-slim)</li>
+        <li>No audio/video proxying — zero latency overhead</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <div class="badge-row">
+    <div class="badge">Python 3.11</div>
+    <div class="badge">FastAPI</div>
+    <div class="badge">Gemini Live API</div>
+    <div class="badge">WebSocket</div>
+    <div class="badge">AudioWorklet</div>
+    <div class="badge">Docker</div>
+    <div class="badge">Railway / Cloud Run</div>
+    <div class="badge">WCAG AA</div>
+  </div>
+</div>
+</body>
+</html>
