@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>AccessVisionAI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <svg class="brand-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="21.17" y1="8" x2="12" y2="8"/>
+          <line x1="3.95" y1="6.06" x2="8.54" y2="14"/>
+          <line x1="10.88" y1="21.94" x2="15.46" y2="14"/>
+        </svg>
+        <span class="brand-name">AccessVision<span class="brand-ai">AI</span></span>
+      </div>
+      <div class="status-chip" role="status" id="status-chip">
+        <span id="status-dot" class="status-dot idle"></span>
+        <span id="status-text" class="status-label">Offline</span>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left: Camera View -->
+      <section class="camera-section">
+        <div class="camera-viewport" id="camera-viewport">
+          <video id="camera-feed" autoplay playsinline muted aria-label="Camera feed"></video>
+          <canvas id="capture-canvas" aria-hidden="true"></canvas>
+
+          <!-- Overlay when idle -->
+          <div class="camera-placeholder" id="camera-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+            <p>Camera will appear here</p>
+          </div>
+
+          <!-- Recording indicator -->
+          <div class="recording-badge" id="recording-badge">
+            <span class="rec-dot"></span>
+            LIVE
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Controls & Info Panel -->
+      <section class="control-panel">
+        <div class="panel-card">
+          <h2 class="panel-title">Session Control</h2>
+          <p class="panel-desc">Start a live session to enable real-time visual and voice assistance.</p>
+
+          <div class="controls">
+            <button id="start-btn" class="btn btn-primary" aria-label="Start assistant">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Start Session
+            </button>
+            <button id="stop-btn" class="btn btn-danger" aria-label="Stop assistant" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="6" width="12" height="12" rx="1"/>
+              </svg>
+              End Session
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <h2 class="panel-title">How It Works</h2>
+          <ul class="feature-list">
+            <li>
+              <span class="feature-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </span>
+              <span><strong>Describe scenes</strong> — "What's in front of me?"</span>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+              </span>
+              <span><strong>Read text</strong> — signs, labels, menus, documents</span>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <span><strong>Hazard alerts</strong> — proactive safety warnings</span>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+              </span>
+              <span><strong>Ask anything</strong> — colors, objects, navigation</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="panel-card tech-card">
+          <div class="tech-row">
+            <span class="tech-badge">Gemini Live API</span>
+            <span class="tech-badge">Real-time Audio</span>
+            <span class="tech-badge">Vision AI</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Built for the Gemini Live Agent Challenge</span>
+      <span class="footer-sep">&middot;</span>
+      <span>Powered by Google Cloud</span>
+    </footer>
+  </div>
+
+  <!-- Screen reader live region -->
+  <div id="aria-status" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
