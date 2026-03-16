@@ -81,6 +81,7 @@ function fromBase64(b64) {
 
 async function initPlayback() {
   playbackCtx = new AudioContext({ sampleRate: PLAYBACK_RATE });
+  await playbackCtx.resume();
   await playbackCtx.audioWorklet.addModule("playback-worklet.js");
   playbackNode = new AudioWorkletNode(playbackCtx, "playback-processor");
   playbackNode.connect(playbackCtx.destination);
@@ -107,6 +108,7 @@ async function startMic() {
   });
 
   micCtx = new AudioContext({ sampleRate: CAPTURE_RATE });
+  await micCtx.resume();
   await micCtx.audioWorklet.addModule("audio-worklet.js");
 
   const source = micCtx.createMediaStreamSource(micStream);

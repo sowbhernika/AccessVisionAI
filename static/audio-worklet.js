@@ -8,8 +8,8 @@ class PCMProcessor extends AudioWorkletProcessor {
     // Ring buffer: 16000 samples = 1 second max
     this._ring = new Float32Array(16000);
     this._writePos = 0;
-    // Send every 128 samples = 8ms at 16kHz (matches AudioWorklet quantum)
-    this._chunkSize = 128;
+    // Send every 256 samples = 16ms at 16kHz (balance latency vs overhead)
+    this._chunkSize = 256;
     this._pcmBuf = new Int16Array(this._chunkSize);
   }
 

@@ -5,23 +5,27 @@
 class PlaybackProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
-    // 2-second ring buffer at 24kHz
-    this._ring = new Float32Array(48000);
+    // 5-second ring buffer at 24kHz
+    this._len = 120000;
+    this._ring = new Float32Array(this._len);
     this._readPos = 0;
     this._writePos = 0;
-    this._len = 48000;
 
     this.port.onmessage = (e) => {
       if (e.data === "flush") {
-        // Interruption: clear the buffer
         this._readPos = 0;
         this._writePos = 0;
         return;
       }
       const samples = new Float32Array(e.data);
       for (let i = 0; i < samples.length; i++) {
+        const nextWrite = (this._writePos + 1) % this._len;
+        // If buffer is full, advance read pointer to drop oldest sample
+        if (nextWrite === this._readPos) {
+          this._readPos = (this._readPos + 1) % this._len;
+        }
         this._ring[this._writePos] = samples[i];
-        this._writePos = (this._writePos + 1) % this._len;
+        this._writePos = nextWrite;
       }
     };
   }
